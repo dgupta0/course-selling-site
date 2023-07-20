@@ -5,6 +5,8 @@ import cors from "cors";
 import jwt from 'jsonwebtoken'
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+
 app.use(cors())
 app.use(bodyParser.json());
 app.use(express.json());
@@ -213,11 +215,11 @@ app.get('/users/purchasedCourses', userJWTAuthenticate, (req, res) => {
             res.status(200).json({ purchasedCourses: USER.purchasedCourses })
         }
     }
-    // logic to view purchased courses
+    // logic to view purchased courses 
 });
 
-app.listen(3000, () => {
-    console.log('Server is listening on port 3000');
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
 
 export default app
