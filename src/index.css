@@ -1,0 +1,10 @@
+header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.showpage-logout-btn {
+    height: 30px;
+
+}
