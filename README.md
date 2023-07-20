@@ -2,5 +2,5 @@ Full stack course selling application. Technologies used Node.js, React, MUI. Fo
 This is the week 4 solo project from the course- https://harkirat.classx.co.in.
 Functionalities-
 Create a course
-See the list of course
+See the list of courses
 Edit a listed with a previewer. 
