@@ -80,6 +80,10 @@ body {
         align-items: center;
     }
 
+    .edit-card {
+        width: 90% !important;
+    }
+
     .body-landing {
         height: 100%;
         display: flex;
@@ -151,7 +155,12 @@ body {
 /* edit card page */
 .edit-card {
     height: 500px;
-    width: 400px;
+    width: 40%;
+    max-width: 400px;
+}
+
+.edit-course-img {
+    object-fit: cover !important;
 }
 
 .edit-landing {

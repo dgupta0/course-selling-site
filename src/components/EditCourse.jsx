@@ -76,7 +76,7 @@ function EditCourse() {
 
     return (
         <div className="edit-landing" style={{ padding: "1rem", backgroundColor: "#5f5f21", display: "flex", justifyContent: "space-evenly", gap: "1rem", minHeight: "87vh" }}>
-            <Card className="edit-card edit-card1" variant="outlined" style={{ display: "flex", flexDirection: "column", maxWidth: "400px", padding: "1rem" }}>
+            <Card className="edit-card edit-card1" variant="outlined" style={{ display: "flex", flexDirection: "column", padding: "1rem" }}>
                 <h1 style={{ textAlign: "center" }}>Edit Course </h1>
 
                 <TextField type={"text"}
@@ -125,7 +125,7 @@ function EditCourse() {
                 <h1 style={{ textAlign: "center" }}>Preview </h1>
                 <CardActionArea>
                     <CardMedia
-                        className="courses-img"
+                        className="edit-course-img"
                         component="img"
                         height="240"
                         image={url}
