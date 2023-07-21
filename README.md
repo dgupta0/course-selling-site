@@ -7,5 +7,5 @@ Functionalities- <br/>
 
 <br/>
 
-Technologies used Node.js, React, MUI. For user authorization JWT Token is used. <br/>
-This is the week 4 solo project from the course- https://harkirat.classx.co.in. 
+Technologies used- Node.js, React, MUI. For user authorization JWT Token is used. <br/>
+This is the week 4 assignment from the course- https://harkirat.classx.co.in. 
