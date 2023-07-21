@@ -1,8 +1,9 @@
-Full stack course selling website. <br/>
+Full stack course selling website <br/>
+
 Functionalities- <br/>
-- Create a course <br/>
+- Create a course with title, image, description and price. <br/>
 - See the list of courses <br/>
-- Edit a listed with a previewer. <br/>
+- Edit a listed with help of a previewer. <br/>
 
 <br/>
 
