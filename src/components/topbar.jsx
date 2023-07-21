@@ -55,7 +55,7 @@ function Topbar() {
         <div className="header">
             <Typography variant="h5"
                 onClick={handleTitleClick} style={{ cursor: "pointer" }}>
-                XCourses
+                CoursesX
             </Typography>
             <header className="max-header" style={{ display: "flex", marginLeft: "auto" }}  >
                 {isLogged ?
