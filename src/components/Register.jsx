@@ -3,6 +3,7 @@ import { Card, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from "react";
 import LoginContext from "../context/LoginContext";
+import path from "../config"
 
 /// File is incomplete. You need to add input boxes to take input for users to register.
 function Register() {
@@ -13,7 +14,8 @@ function Register() {
 
     async function handleRegister() {
         try {
-            const res = await fetch("http://localhost:3000/admin/signup/", {
+            console.log("path", path)
+            const res = await fetch(`${path}/admin/signup/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

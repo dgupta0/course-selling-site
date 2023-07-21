@@ -5,6 +5,7 @@ import { useContext } from "react";
 import LoginContext from "../context/LoginContext"
 import { useNavigate } from 'react-router-dom';
 import menu from "../assets/menu.png";
+import path from "../config"
 
 
 function Topbar() {
@@ -25,7 +26,7 @@ function Topbar() {
 
     React.useEffect(() => {
         const token = localStorage.getItem("token");
-        fetch("http://localhost:3000/admin/me/", {
+        fetch(`${path}/admin/me/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

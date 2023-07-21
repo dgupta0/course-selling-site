@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, TextField, Button, CardActionArea, CardActions, Typography } from "@mui/material";
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import path from "../config"
 
 
 
@@ -24,7 +25,7 @@ function EditCourse() {
     useEffect(() => {
         try {
             const token = localStorage.getItem("token");
-            fetch("http://localhost:3000/admin/courses", {
+            fetch(`${path}/admin/courses`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -55,7 +56,7 @@ function EditCourse() {
     function handleEditCourse() {
         try {
             const token = localStorage.getItem("token");
-            fetch(`http://localhost:3000/admin/courses/${id}`, {
+            fetch(`${path}/admin/courses/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

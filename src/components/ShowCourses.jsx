@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import path from "../config"
 
 function ShowCourses() {
     const [courses, setCourses] = useState([]);
@@ -13,7 +14,7 @@ function ShowCourses() {
     useEffect(() => {
         try {
             const token = localStorage.getItem("token");
-            fetch("http://localhost:3000/admin/courses", {
+            fetch(`${path}/admin/courses`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

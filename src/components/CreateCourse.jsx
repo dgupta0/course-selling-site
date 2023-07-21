@@ -1,6 +1,7 @@
 import { Card, TextField, Button } from "@mui/material";
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import path from "../config"
 
 function CreateCourse() {
     const [title, setTitle] = React.useState("");
@@ -13,7 +14,7 @@ function CreateCourse() {
     function handleCreateCourse() {
         try {
             const token = localStorage.getItem("token");
-            fetch("http://localhost:3000/admin/courses/", {
+            fetch(`${path}/admin/courses/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
