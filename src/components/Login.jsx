@@ -1,17 +1,21 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import { Card, Typography, TextField, Button } from '@mui/material';
+import { Card, Typography, TextField, Button, CircularProgress } from '@mui/material';
 import { useContext } from "react";
 import LoginContext from "../context/LoginContext"
 import path from "../config"
+
+
 
 function Login() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const { setIsLogged } = useContext(LoginContext)
     const navigate = useNavigate()
+    const [loading, setIsLoading] = React.useState(false)
 
     function handleLogin() {
+        setIsLoading(true)
         try {
             fetch(`${path}/admin/login/`, {
                 method: 'POST',
@@ -56,8 +60,11 @@ function Login() {
             <Button
                 style={{ marginBottom: "10px" }}
                 variant="contained"
-                onClick={handleLogin}>
-                Submit
+                onClick={handleLogin}
+                disabled={loading}
+            >
+                {loading ? <CircularProgress size={20} color="inherit" /> : 'Login'}
+
             </Button>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <Typography variant="h6" >

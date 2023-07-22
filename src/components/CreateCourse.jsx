@@ -1,4 +1,4 @@
-import { Card, TextField, Button } from "@mui/material";
+import { Card, TextField, Button, CircularProgress } from "@mui/material";
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import path from "../config"
@@ -9,9 +9,11 @@ function CreateCourse() {
     const [price, setPrice] = React.useState("");
     const [url, setUrl] = React.useState("");
     const [isPublished, setIsPublished] = React.useState(false);
+    const [loading, setIsLoading] = React.useState(false)
     const navigate = useNavigate();
 
     function handleCreateCourse() {
+        setIsLoading(true)
         try {
             const token = localStorage.getItem("token");
             fetch(`${path}/admin/courses/`, {
@@ -77,8 +79,11 @@ function CreateCourse() {
                 <Button
                     style={{ marginBottom: "10px" }}
                     variant="contained"
-                    onClick={handleCreateCourse}>
-                    Create Course
+                    onClick={handleCreateCourse}
+                    disabled={loading}
+                >
+                    {loading ? <CircularProgress size={20} color="inherit" /> : 'Create Course'}
+
                 </Button>
             </Card>
         </div>

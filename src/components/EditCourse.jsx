@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Card, TextField, Button, CardActionArea, CardActions, Typography } from "@mui/material";
+import { Card, TextField, Button, CardActionArea, CardActions, Typography, CircularProgress } from "@mui/material";
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import path from "../config"
@@ -18,8 +18,10 @@ function EditCourse() {
     const [price, setPrice] = useState(0);
     const [url, setUrl] = useState("");
     const [isPublished, setIsPublished] = useState(false);
+    const [loading, setIsLoading] = React.useState(false)
 
     useEffect(() => {
+
         try {
             const token = localStorage.getItem("token");
             fetch(`${path}/admin/courses`, {
@@ -51,6 +53,7 @@ function EditCourse() {
     }, [])
     console.log(editedCourse, title, description)
     function handleEditCourse() {
+        setIsLoading(true)
         try {
             const token = localStorage.getItem("token");
             fetch(`${path}/admin/courses/${id}`, {
@@ -114,8 +117,10 @@ function EditCourse() {
                 <Button
                     style={{ marginBottom: "10px" }}
                     variant="contained"
-                    onClick={handleEditCourse}>
-                    Done
+                    onClick={handleEditCourse}
+                    disabled={loading}
+                >
+                    {loading ? <CircularProgress size={20} color="inherit" /> : 'Done'}
                 </Button>
             </Card>
             <Card className="edit-card edit-card2" style={{ padding: "1rem" }}>

@@ -57,7 +57,7 @@ function Register() {
                 onClick={handleRegister}
                 disabled={loading}
             >
-                {loading ? <CircularProgress size={20} color="inherit" /> : 'Submit'}
+                {loading ? <CircularProgress size={20} color="inherit" /> : 'Register'}
             </Button>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <Typography variant="h6" >

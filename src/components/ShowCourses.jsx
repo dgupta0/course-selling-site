@@ -5,13 +5,15 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions, CircularProgress } from '@mui/material';
 import path from "../config"
 
 function ShowCourses() {
     const [courses, setCourses] = useState([]);
     const navigate = useNavigate();
+    const [loading, setIsLoading] = React.useState(false)
     useEffect(() => {
+
         try {
             const token = localStorage.getItem("token");
             fetch(`${path}/admin/courses`, {
@@ -44,6 +46,8 @@ function ShowCourses() {
                     id={c.id}
                     img={c.imageLink}
                     navigate={navigate}
+                    loading={loading}
+                    setIsLoading={setIsLoading}
                 />
             )}
         </div>
@@ -51,6 +55,11 @@ function ShowCourses() {
 }
 
 function Course(props) {
+    function handleEditCourse(id) {
+        props.setIsLoading(true)
+        props.navigate(`/courses/${id}`)
+
+    }
     return <Card className="show-course-card" style={{ boxShadow: "5px 10px 8px #888888", flexGrow: "1", padding: "1rem" }}>
         <CardActionArea>
             <CardMedia
@@ -76,8 +85,10 @@ function Course(props) {
         </CardActionArea>
         <CardActions>
             <Button size="small" color="primary"
-                onClick={() => props.navigate(`/courses/${props.id}`)}>
-                Edit Course
+                onClick={() => handleEditCourse(props.id)}
+                disabled={props.loading}
+            >
+                {props.loading ? <CircularProgress size={20} color="inherit" /> : 'Edit'}
             </Button>
         </CardActions>
     </Card>
