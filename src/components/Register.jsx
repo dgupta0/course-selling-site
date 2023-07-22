@@ -1,18 +1,19 @@
 import React from "react";
-import { Card, Typography, TextField, Button } from '@mui/material';
+import { Card, Typography, TextField, Button, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from "react";
 import LoginContext from "../context/LoginContext";
 import path from "../config"
 
-/// File is incomplete. You need to add input boxes to take input for users to register.
 function Register() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const { setIsLogged } = useContext(LoginContext)
+    const [loading, setIsLoading] = React.useState(false)
     const navigate = useNavigate()
 
     async function handleRegister() {
+        setIsLoading(true)
         try {
             console.log("path", path)
             const res = await fetch(`${path}/admin/signup/`, {
@@ -53,8 +54,10 @@ function Register() {
             <Button
                 style={{ marginBottom: "10px" }}
                 variant="contained"
-                onClick={handleRegister}>
-                Submit
+                onClick={handleRegister}
+                disabled={loading}
+            >
+                {loading ? <CircularProgress size={20} color="inherit" /> : 'Submit'}
             </Button>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <Typography variant="h6" >

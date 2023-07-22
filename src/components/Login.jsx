@@ -5,9 +5,6 @@ import { useContext } from "react";
 import LoginContext from "../context/LoginContext"
 import path from "../config"
 
-
-
-/// File is incomplete. You need to add input boxes to take input for users to login.
 function Login() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");

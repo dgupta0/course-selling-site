@@ -7,9 +7,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import path from "../config"
 
-
-
-
 function EditCourse() {
     const [editedCourse, setCourse] = useState(null)
     const { id } = useParams();
