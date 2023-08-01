@@ -9,7 +9,6 @@ import path from "../config"
 
 
 function Topbar() {
-    // MUI code for creating menus until line 19
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {

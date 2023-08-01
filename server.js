@@ -2,8 +2,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
+import mongoose from "mongoose";
+
 const app = express();
+const password = "MerUMZDbEafdixt6";
 
 const PORT = process.env.PORT || 3000;
 
@@ -11,9 +14,35 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(express.json());
 
-let ADMINS = [];
-let USERS = [];
-let COURSES = [];
+const AdminSchema = new mongoose.Schema({
+    username: String,
+    password: String
+})
+
+const UserSchema = new mongoose.Schema({
+    username: String,
+    password: String,
+    purchasedCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
+})
+
+const CourseSchema = mongoose.Schema({
+    id: Number,
+    title: String,
+    description: String,
+    price: Number,
+    imageLink: String,
+    published: Boolean
+})
+
+const Admin = mongoose.model("Admin", AdminSchema)
+const USER = mongoose.model("USER", UserSchema)
+const Course = mongoose.model("Course", CourseSchema)
+
+mongoose.connect(`mongodb+srv://deetigupta8:${password}@cluster0.ewhiqzs.mongodb.net/courses`, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// let ADMINS = [];
+// let USERS = [];
+// let COURSES = [];
 
 const key = "secretKey1";
 
@@ -83,29 +112,33 @@ function userJWTAuthenticate(req, res, next) {
 //         res.status(401).send("please enter valid username and password")
 //     }
 // }
-app.post('/admin/signup', (req, res) => {
+app.post('/admin/signup', async (req, res) => {
     const { username, password } = req.body
     console.log(username, password)
-    const admin = ADMINS.find(admin => admin.username === username);
+    const admin = await Admin.findOne({ username })
+    // ADMINS.find(admin => admin.username === username);
     if (admin) {
         res.status(403).json({ message: 'Admin already exists' });
     }
     else if (!username || !password) {
         res.status(401).send("please enter valid username and password")
     } else {
-        const newAdmin = { username, password };
-        ADMINS.push(newAdmin)
-        console.log(ADMINS)
+        const admin = { username, password };
+        const newAdmin = new Admin(admin)
+        await newAdmin.save()
+        // ADMINS.push(newAdmin)
+        // console.log(ADMINS)
         const token = generateAdminToken(username)
         res.status(200).json({ message: "Admin created successfully", token })
     }
 });
 
-app.post('/admin/login', (req, res) => {
+app.post('/admin/login', async (req, res) => {
     const { username, password } = req.body;
-    const existingAdmin = ADMINS.filter(admin =>
-        admin.username === username && admin.password === password)
-    if (existingAdmin.length) {
+    const existingAdmin = await Admin.findOne({ username, password })
+    // const existingAdmin = ADMINS.filter(admin =>
+    //     admin.username === username && admin.password === password)
+    if (existingAdmin) {
         const token = generateAdminToken(username)
         res.status(200).json({ message: "Admin logged in successfully", token })
     } else {
@@ -114,17 +147,20 @@ app.post('/admin/login', (req, res) => {
 });
 
 
-app.post('/admin/courses', adminJWTAuthenticate, (req, res) => {
+app.post('/admin/courses', adminJWTAuthenticate, async (req, res) => {
     const { title, description, price, imageLink, published } = req.body;
     console.log(req.body)
     if (!title || !description || !price || !imageLink) {
         res.status(411).send("please add all the course inputs")
     } else {
         let id = Math.floor(Math.random() * 1000000);
-        COURSES.push({
-            id, title, description, price, imageLink, published
-        })
-        console.log(COURSES)
+        let course = { id, title, description, price, imageLink, published }
+        let newCourse = new Course(course)
+        await newCourse.save()
+        // COURSES.push({
+        //     id, title, description, price, imageLink, published
+        // })
+        // console.log(COURSES)
         res.status(200).json({ message: 'Course created successfully', courseId: id })
     }
 });
@@ -134,16 +170,19 @@ app.get("/admin/me", adminJWTAuthenticate, (req, res) => {
     res.status(200).json({ username })
 })
 
-app.put('/admin/courses/:id', adminJWTAuthenticate, (req, res) => {
+app.put('/admin/courses/:id', adminJWTAuthenticate, async (req, res) => {
     const id = parseInt(req.params.id)
-    const existingCourse = COURSES.filter(course => course.id === id)
+    const existingCourse = await Course.findOneAndUpdate({ id }, {
+        title: req.body.title,
+        description: req.body.description,
+        price: req.body.price,
+        imageLink: req.body.imageLink,
+        published: req.body.published
+
+    })
+    // const existingCourse = COURSES.filter(course => course.id === id)
     // console.log("existing put", existingCourse)
-    if (existingCourse.length) {
-        existingCourse[0].title = req.body.title
-        existingCourse[0].description = req.body.description
-        existingCourse[0].price = req.body.price
-        existingCourse[0].imageLink = req.body.imageLink
-        existingCourse[0].published = req.body.published
+    if (existingCourse) {
         res.status(200).json({ message: `course ${id} updated successfuly` })
 
     } else {
@@ -151,8 +190,9 @@ app.put('/admin/courses/:id', adminJWTAuthenticate, (req, res) => {
     }
 });
 
-app.get('/admin/courses', adminJWTAuthenticate, (req, res) => {
-    res.status(200).json(COURSES)
+app.get('/admin/courses', adminJWTAuthenticate, async (req, res) => {
+    let courses = await Course.find()
+    res.status(200).json(courses)
 });
 
 // User routes
